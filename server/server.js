@@ -10,6 +10,8 @@ let { User } = require('./models/user.js')
 let { TrafficCom } = require('./models/trafficcomp.js')
 let { AccidentCom } = require('./models/accidentcomp.js')
 let { DailySchedules } = require('./models/dailyschedule.js')
+let { PoliceUser } = require('./models/police')
+let { HospitalUser } = require('./models/hospital')
 
 let app = express()
 let port = process.env.PORT || 3000
@@ -125,6 +127,54 @@ app.post('/daily', (req, res) => {
     })
 
     daily.save().then((doc) => {
+        res.send(doc)
+    }).catch((err) => {
+        res.status(400).send(err)
+    })
+})
+
+app.get('/policeusers', (req, res) => {
+    PoliceUser.find().then((policeusers) => {
+        res.send(policeusers)
+    }).catch((err) => {
+        res.status(400).send(err)
+    })
+})
+
+app.post('/policeusers', (req, res) => {
+    console.log(req.body)
+
+    let policeuser = new PoliceUser({
+        email:req.body.email,
+        pincode:req.body.pincode,
+        password:req.body.password,
+    })
+
+    policeuser.save().then((doc) => {
+        res.send(doc)
+    }).catch((err) => {
+        res.status(400).send(err)
+    })
+})
+
+app.get('/hospitalusers', (req, res) => {
+    HospitalUser.find().then((hospitalusers) => {
+        res.send(hospitalusers)
+    }).catch((err) => {
+        res.status(400).send(err)
+    })
+})
+
+app.post('/hospitalusers', (req, res) => {
+    console.log(req.body)
+
+    let hospitaluser = new HospitalUser({
+        email:req.body.email,
+        pincode:req.body.pincode,
+        password:req.body.password,
+    })
+
+    hospitaluser.save().then((doc) => {
         res.send(doc)
     }).catch((err) => {
         res.status(400).send(err)
