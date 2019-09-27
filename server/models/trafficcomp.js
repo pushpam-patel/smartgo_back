@@ -10,6 +10,9 @@ let TrafficCom = mongoose.model('TrafficCom', {
     place:{
         type:String
     },
+    no_of_complaints:{
+        type:Number
+    },
     level:{
         type:String
     },

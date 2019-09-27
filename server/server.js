@@ -1,17 +1,15 @@
 let express = require('express')
 let bodyParser = require('body-parser')
-let geocoding = new require('reverse-geocoding')
-let geo= new require('reverse-geocoding-google')
-let cors = require('cors')
+let geocoding = new require('reverse-geocoding');
+let geo=new require('reverse-geocoding-google')
+let cors=require('cors')
 
-let {mongoose} = require ('./db/mongoose.js')
+let { mongoose } = require('./db/mongoose.js')
 
-let {User} = require('./models/user.js')
-let {TrafficCom} = require('./models/trafficcomp.js')
-let {AccidentCom} = require('./models/accidentcomp.js')
+let { User } = require('./models/user.js')
+let { TrafficCom } = require('./models/trafficcomp.js')
+let { AccidentCom } = require('./models/accidentcomp.js')
 let { DailySchedules } = require('./models/dailyschedule.js')
-let {PoliceUser} = require('./models/police.js')
-let {HospitalUser}= require('./models/hospital.js')
 
 let app = express()
 let port = process.env.PORT || 3000
@@ -85,7 +83,6 @@ app.post('/traffic', (req, res) => {
     })
 })
 
-
 app.get('/accident', (req, res) => {
     AccidentCom.find().then((accident) => {
         res.send(accident)
@@ -93,7 +90,6 @@ app.get('/accident', (req, res) => {
         res.status(400).send(err)
     })
 })
-
 
 app.post('/accident', (req, res) => {
     console.log(req.body)
