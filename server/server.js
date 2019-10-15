@@ -192,14 +192,6 @@ app.post('/hospitalusers', (req, res) => {
     })
 })
 
-app.delete('/hospital', (req, res) => {
-    const { place } = req.param;
-    db.collection('hospital').findOneAndDelete({place: place}, 
-    (err, result) => {
-    if (err) return res.send(500, err)
-    console.log('got deleted');
-    res.redirect('/');
-    });
-});
+
 
 app.listen(port)
