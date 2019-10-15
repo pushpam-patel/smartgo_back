@@ -18,20 +18,28 @@ let port = process.env.PORT || 3000
 
 app.use(bodyParser.json())
 app.use(cors())
-
+console.log("strated server")
 app.post('/rgeo',(req,res)=>{
     let lat=req.body.lat
     let long=req.body.long
-    
+    console.log("hello")
     let config={
         'latitude':lat,
         'longitude':long,
         'key':'AIzaSyCEF1MgrRBaktN47f3Xf_sb1POSHnDunY0'
-    }
+    }   
+    console.log("hello")
 
     geo.location(config, function (err, data){
         res.send(data.results[0].formatted_address)
-    });
+        console.log(data);
+        console.log("hello")
+
+    }
+    
+    );
+    console.log("hello")
+
 })
 
 app.get('/users', (req, res) => {
@@ -61,16 +69,19 @@ app.post('/users', (req, res) => {
 })
 
 app.get('/traffic', (req, res) => {
+    console.log("inside traffic")
     TrafficCom.find().then((traffic) => {
         res.send(traffic)
+        console.log("inside rraffic11")
     }).catch((err) => {
+        console.log("traffic2")
         res.status(400).send(err)
     })
 })
 
 app.post('/traffic', (req, res) => {
     console.log(req.body)
-
+    console.log("inside traffic")
     let traffic = new TrafficCom({
         date:req.body.date,
         time:req.body.time,
@@ -180,5 +191,15 @@ app.post('/hospitalusers', (req, res) => {
         res.status(400).send(err)
     })
 })
+
+app.delete('/hospital', (req, res) => {
+    const { place } = req.param;
+    db.collection('hospital').findOneAndDelete({place: place}, 
+    (err, result) => {
+    if (err) return res.send(500, err)
+    console.log('got deleted');
+    res.redirect('/');
+    });
+});
 
 app.listen(port)
